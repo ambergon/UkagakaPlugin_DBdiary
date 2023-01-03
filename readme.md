@@ -10,11 +10,11 @@
 
 ## 日記を書く
 二種類の方法で日記を書くことができます。
-- DirtyDiary
+- DirtyDiary<br>
     保存名が日付+日記内容.txtになります。<br>
     日記の中には「Dirty Diary」に統一されます。<br>
 
-- BeautifulDiary
+- BeautifulDiary<br>
     保存名が日付.txtになります。<br>
     こちらはゴーストから日記内容を取得できるようにしています。<br>
 
@@ -37,7 +37,7 @@
 "\![raiseplugin,DBdiary,OnCallInputBeautifulDiary,before_text,after_text]"
 ```
 
-##日記の内容を引っ張り出す。
+## 日記の内容を引っ張り出す。
 同じくbefore_text,after_textをうまく使ってやってください。<br>
 指定した日付の日記の内容を取得します。<br>
 notWriteは何も書かれていなかった時、<br>
