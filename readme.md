@@ -5,7 +5,7 @@
 ```
 "\![raiseplugin,DBdiary,OnCallInputDirtyDiary,before_text,after_text]"
 "\![raiseplugin,DBdiary,OnCallInputBeautifulDiary,before_text,after_text]"
-//"\![raiseplugin,DBdiary,OnGetBeautifulDiary,yyyymmdd,before_text,after_text,notWrite,notExist]"
+"\![raiseplugin,DBdiary,OnGetBeautifulDiary,yyyymmdd,before_text,after_text,notWrite,notExist]"
 ```
 
 ## 日記を書く

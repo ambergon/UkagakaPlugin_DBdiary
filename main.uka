@@ -56,7 +56,8 @@ OnGetBeautifulDiary {
         _DiaryText = FREAD( _FileName )
         FCLOSE( _FileName )
         if ( _DiaryText == "-1" || _DiaryText == "" ) {
-            "何も書いてないよ。"
+            //"何も書いてないよ。"
+            _notWrite
         } else {
             _text = _before + _DiaryText + _after
             _text
