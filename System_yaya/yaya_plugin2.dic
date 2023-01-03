@@ -34,7 +34,7 @@ ver. date     noted
 //------------------------------------------------------------------------------
 load {
     //RESTOREVAR()
-    RESTOREVAR("../SSP-CeVIO-Talker.cfg")
+    RESTOREVAR()
 	REQ.COMMAND   = "LOAD"
 	REQ.PROTOCOL  = "AYA/5.0"
 	var.req.key   = (IARRAY, "Path")
@@ -142,7 +142,7 @@ unload {
 	
 	PLUGINFW.ClearReferenceVariable
 	PLUGINFW.ClearValueexVariable
-    SAVEVAR("../SSP-CeVIO-Talker.cfg")
+    SAVEVAR()
     //SAVEVAR()
 }
 
