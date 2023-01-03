@@ -1,0 +1,116 @@
+//pluginのエラーは通知が起きない。
+
+
+version {
+	"origin/1.0"
+}
+OnPluginLoad.Self {
+}
+
+OnPluginUnload.Self {
+}
+
+
+
+//テスト用メニューでも作るか。
+//"\![raiseplugin,DBdiary,OnCallInputBeautifulDiary,before_text,after_text]"
+//"\![raiseplugin,DBdiary,OnCallInputDirtyDiary,before_text,after_text]"
+//"\![raiseplugin,DBdiary,OnGetBeautifulDiary,yyyymmdd,before_text,after_text,notWrite,notExist]"
+OnMenuExec {
+}
+
+
+//日記テキスト入力用。
+OnCallInputBeautifulDiary {
+    _before = reference[0]
+    _after  = reference[1]
+    _text = _before + "\![open,inputbox,OnInputBeautifulDiary]" + _after
+    _text
+}
+OnCallInputDirtyDiary {
+    _before = reference[0]
+    _after  = reference[1]
+    _text = _before + "\![open,inputbox,OnInputDirtyDiary]" + _after
+    _text
+}
+
+
+//日記内容取得用。
+OnGetBeautifulDiary {
+    _Day = reference[0]
+    _before   = reference[1]
+    _after    = reference[2]
+    _notWrite = reference[3]
+    _notExist = reference[4]
+
+    //読み込めなかった場合どうしようか。
+    _FileName = "./Diary/" + TOSTR( _Day ) + ".txt"
+    
+    FCHARSET( "UTF-8" )
+    _devnull = FOPEN( _FileName , "r" )
+    if ( _devnull == "0" ) {
+        //日記が存在しないよ
+        _aa = _notExist + _FileName
+        _aa
+    } else {
+        _DiaryText = FREAD( _FileName )
+        FCLOSE( _FileName )
+        if ( _DiaryText == "-1" || _DiaryText == "" ) {
+            "何も書いてないよ。"
+        } else {
+            _text = _before + _DiaryText + _after
+            _text
+        }
+    }
+}
+
+
+OnInputBeautifulDiary {
+    _str = TOSTR( reference[0] )
+    if ( _str != "" ) {
+        _LocalDay = "%(day)"
+        if ( TOINT(_LocalDay) < 10 ) {
+            _LocalDay = "0" + TOSTR(_LocalDay)
+        }
+        _LocalMonth = "%(month)"
+        if ( TOINT(_LocalMonth) < 10 ) {
+            _LocalMonth = "0" + TOSTR(_LocalMonth)
+        }
+
+        _FileName = "./Diary/" + "%(year)%(_LocalMonth)%(_LocalDay)" + ".txt"
+        FCHARSET( "UTF-8" )
+        _devnull = FOPEN( _FileName , "w" )
+        FWRITE( _FileName , _str )
+        FCLOSE( _FileName )
+    }
+}
+OnInputDirtyDiary {
+    _str = TOSTR( reference[0] )
+    if ( _str != "" ) {
+        _LocalDay = "%(day)"
+        if ( TOINT(_LocalDay) < 10 ) {
+            _LocalDay = "0" + TOSTR(_LocalDay)
+        }
+        _LocalMonth = "%(month)"
+        if ( TOINT(_LocalMonth) < 10 ) {
+            _LocalMonth = "0" + TOSTR(_LocalMonth)
+        }
+
+        _FileName = "./Diary/" + "%(year)%(_LocalMonth)%(_LocalDay)" + _str + ".txt"
+        FCHARSET( "UTF-8" )
+        _devnull = FOPEN( _FileName , "w" )
+        FWRITE( _FileName , "Dirty Diary" )
+        FCLOSE( _FileName )
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
