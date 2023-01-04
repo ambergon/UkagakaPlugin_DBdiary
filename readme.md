@@ -6,6 +6,10 @@
 "\![raiseplugin,DBdiary,OnCallInputDirtyDiary,before_text,after_text]"
 "\![raiseplugin,DBdiary,OnCallInputBeautifulDiary,before_text,after_text]"
 "\![raiseplugin,DBdiary,OnGetBeautifulDiary,yyyymmdd,before_text,after_text,notWrite,notExist]"
+
+
+//20230104追加関数
+"\![raiseplugin,DBdiary,OnCheckWrittenDiary]"
 ```
 
 ## 日記を書く
@@ -44,6 +48,32 @@ notWriteは何も書かれていなかった時、<br>
 notExistは日記がなかった時に表示されます。<br>
 ```
 "\![raiseplugin,DBdiary,OnGetBeautifulDiary,yyyymmdd,before_text,after_text,notWrite,notExist]"
+```
+
+
+## 日記の内容を引っ張り出す。2
+先ほどの関数ではゴーストから扱いづらいので別の関数を用意しました。
+引数は不要でこのサクラスクリプトを実行するだけです。
+```
+"\![raiseplugin,DBdiary,OnCheckWrittenDiary]"
+```
+ただし、ゴースト側で下記のOnRecieveCheckWrittenDiary関数を実装してください。
+この関数はreference0に ファイルが存在してかつ、空のファイルじゃなかった場合はBeautifulDiaryの本文が格納されています。
+
+以下は実装例。
+```
+OnRecieveCheckWrittenDiary {
+    _res = reference[0]
+    if ( _res == "notExist" ) {
+        "書いてないやんけ。"
+
+    } elseif ( _res == "notWrite" ) {
+        "白紙やぞ。"
+
+    } else {
+        _text = "この日の日記は " + _res + "だったんだね。"
+    }
+}
 ```
 
 

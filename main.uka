@@ -16,6 +16,58 @@ OnPluginUnload.Self {
 //"\![raiseplugin,DBdiary,OnCallInputBeautifulDiary,before_text,after_text]"
 //"\![raiseplugin,DBdiary,OnCallInputDirtyDiary,before_text,after_text]"
 //"\![raiseplugin,DBdiary,OnGetBeautifulDiary,yyyymmdd,before_text,after_text,notWrite,notExist]"
+
+//お前今日日記書いたん?
+//"\![raiseplugin,DBdiary,OnCheckWrittenDiary]"
+//OnRecieveCheckWrittenDiary {
+//    reference[0]
+//}
+
+
+OnCheckWrittenDiary {
+    _res = ""
+
+
+    _LocalDay = "%(day)"
+    if ( TOINT(_LocalDay) < 10 ) {
+        _LocalDay = "0" + TOSTR(_LocalDay)
+    }
+    _LocalMonth = "%(month)"
+    if ( TOINT(_LocalMonth) < 10 ) {
+        _LocalMonth = "0" + TOSTR(_LocalMonth)
+    }
+    _FileName = "./Diary/" + "%(year)%(_LocalMonth)%(_LocalDay)" + ".txt"
+    
+
+    //テキストが存在する。
+    //空ではない。
+    FCHARSET( "UTF-8" )
+    _devnull = FOPEN( _FileName , "r" )
+    if ( _devnull == "0" ) {
+        //日記が存在しないよ
+        _res = "notExist"
+
+    } else {
+        _DiaryText = FREAD( _FileName )
+        FCLOSE( _FileName )
+        if ( _DiaryText == "-1" || _DiaryText == "" ) {
+            //"何も書いてないよ。"
+            _res = "notWrite"
+
+        } else {
+            _res = _DiaryText
+
+        }
+    }
+    res_event = 'OnRecieveCheckWrittenDiary' 
+    res_reference[0] = _res
+}
+
+
+
+
+
+//保存先を取得して消すときのサポートを
 OnMenuExec {
 }
 
@@ -80,7 +132,7 @@ OnInputBeautifulDiary {
 
         _FileName = "./Diary/" + "%(year)%(_LocalMonth)%(_LocalDay)" + ".txt"
         FCHARSET( "UTF-8" )
-        _devnull = FOPEN( _FileName , "w" )
+        _devnull = FOPEN( _FileName , "a" )
         FWRITE( _FileName , _str )
         FCLOSE( _FileName )
     }
@@ -99,7 +151,7 @@ OnInputDirtyDiary {
 
         _FileName = "./Diary/" + "%(year)%(_LocalMonth)%(_LocalDay)" + _str + ".txt"
         FCHARSET( "UTF-8" )
-        _devnull = FOPEN( _FileName , "w" )
+        _devnull = FOPEN( _FileName , "a" )
         FWRITE( _FileName , "Dirty Diary" )
         FCLOSE( _FileName )
     }
