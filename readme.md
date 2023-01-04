@@ -77,6 +77,7 @@ OnRecieveCheckWrittenDiary {
 ```
 
 
+
 ## お借りしたもの
 yaya.dll
 [Releases · YAYA-shiori/yaya-shiori · GitHub](https://github.com/YAYA-shiori/yaya-shiori/releases)
@@ -92,9 +93,22 @@ main.uka内部を好きに書き換えてくれて構いません。<br>
 実際に作ってみたものの、raisepluginが使いづらく、<br>
 プラグイン化のメリットはゴーストのデータを汚さないことぐらいでしょうか.<br>
 
+FREADで読み込めるのは一行だけの都合、日記を読み込む際に複数行書かれた場合(追記モードに変更したのであり得る)最初の一行しか引っ張れない問題がある。
+
+
+
 
 ## Author
 [ambergon](https://twitter.com/Sc_lFoxGon)
+
+o
+
+
+
+
+
+
+
 
 
 
